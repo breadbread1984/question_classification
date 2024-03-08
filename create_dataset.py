@@ -2,7 +2,8 @@
 
 from absl import flags, app
 from os import mkdir
-from os.path import join
+from os.path import join, exists
+from shutil import rmtree
 from datasets import Dataset
 from csv import reader
 import json
@@ -35,6 +36,8 @@ def generate_dataset(data_dir, div = 'train', output = "output.csv"):
     f.write(json.dumps(samples))
 
 def main(unused_argv):
+  if exists(FLAGS.output): rmtree(FLAGS.output)
+  mkdir(FLAGS.output)
   generate_dataset(FLAGS.dataset, 'train', output = join(FLAGS.output, 'train.json'))
   generate_dataset(FLAGS.dataset, 'dev', output = join(FLAGS.output, 'val.json'))
 
