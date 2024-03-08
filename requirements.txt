@@ -1,3 +1,8 @@
 torch
 huggingface_hub
 transformers
+jieba
+ruamel
+nltk
+peft
+rouge_chinese
