@@ -39,7 +39,7 @@ def main(unused_argv):
   if exists(FLAGS.output): rmtree(FLAGS.output)
   mkdir(FLAGS.output)
   generate_dataset(FLAGS.dataset, 'train', output = join(FLAGS.output, 'train.json'))
-  generate_dataset(FLAGS.dataset, 'dev', output = join(FLAGS.output, 'val.json'))
+  generate_dataset(FLAGS.dataset, 'dev', output = join(FLAGS.output, 'dev.json'))
 
 if __name__ == "__main__":
   add_options()
