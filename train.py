@@ -9,10 +9,13 @@ FLAGS = flags.FLAGS
 
 def add_options():
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'path to checkpoint directory')
+  flags.DEFINE_string('dataset', default = None, help = 'path to dataset directory')
 
 def main(unused_argv):
   tokenizer = AutoTokenizer.from_pretrained('THUDM/chatglm-3')
   model = AutoModelForCausalLM.from_pretrained('THUDM/chatglm-3')
+  trainset = load_dataset(FLAGS.dataset, 'train')
+  valset = load_dataset(FLAGS.dataset, 'dev')
   choices = ['A', 'B', 'C', 'D', 'E', 'F']
   choice_tokens = [tokenizer.encode(choice, add_special_tokens = False)[0] for choice in choices]
   training_args = TrainingArguments(output_dir = FLAGS.ckpt, evaluation_strategy = "epoch")
