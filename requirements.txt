@@ -2,7 +2,7 @@ torch
 huggingface_hub
 transformers
 jieba
-ruamel
+ruamel_yaml
 nltk
 peft
 rouge_chinese
