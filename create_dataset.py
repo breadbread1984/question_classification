@@ -16,7 +16,7 @@ def add_options():
 
 def generate_dataset(data_dir, div = 'train', output = "output.csv"):
   assert div in {'train', 'dev', 'test'}
-  prompt = '以下是糖尿病问题分类单项选择题，请选出正确类别。\n\n%s\n\nA. 诊断\nB. 治疗\nC. 常识\nD. 健康生活方式\nE. 流行病学\nF. 其他\n答案：'
+  prompt = '以下是糖尿病问题分类单项选择题，请选出正确类别。\n\n%s\n\nA.诊断\nB.治疗\nC.常识\nD.健康生活方式\nE.流行病学\nF.其他\n答案：'
   with open(join(data_dir, '%s.txt' % div), 'r') as f:
     csv = reader(f, delimiter = '\t')
     samples = list()
