@@ -29,6 +29,17 @@ python3 create_dataset.py --dataset <path/to/raw/dataset> --output <path/to/proc
 ```shell
 git clone https://github.com/THUDM/ChatGLM3
 cd ChatGLM3/finetune_demo
+```
+
+change **finetune_demo/finetune_hf.py**:151 to
+
+```python
+default_factory=Seq2SeqTrainingArguments(output_dir='./output')
+```
+
+train with the following command
+
+```shell
 python finetune_hf.py <path/to/processed/dataset> THUDM/chatglm3-6b configs/lora.yaml
 ```
 
