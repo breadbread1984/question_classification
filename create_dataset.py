@@ -1,29 +1,46 @@
 #!/usr/bin/python3
 
-from os.path import join
-from datasets import load_dataset
-from csv import reader, QUOTE_ALL
+from absl import flags, app
+from os import mkdir
+from os.path import join, exists
+from shutil import rmtree
+from datasets import Dataset
+from csv import reader
 import json
 
-def convert(orig, dst):
-  samples = list()
-  with open(orig, 'r') as inf:
-    csv = reader(inf, delimiter = '\t')
+FLAGS = flags.FLAGS
+
+def add_options():
+  flags.DEFINE_string('dataset', default = None, help = 'path to dataset directory')
+  flags.DEFINE_string('output', default = 'dataset', help = 'path to output')
+
+def generate_dataset(data_dir, div = 'train', output = "output.csv"):
+  assert div in {'train', 'dev', 'test'}
+  prompt = '以下是糖尿病问题分类单项选择题，请选出正确类别。\n\n%s\n\nA.诊断\nB.治疗\nC.常识\nD.健康生活方式\nE.流行病学\nF.其他\n答案：'
+  with open(join(data_dir, '%s.txt' % div), 'r') as f:
+    csv = reader(f, delimiter = '\t')
+    samples = list()
     for row in csv:
-      samples.append({'text': row[0], 'label': int(row[1])})
-  with open(dst, 'w') as outf:
-    outf.write(json.dumps({'version': "0.1.0", "data": samples}, ensure_ascii = False))
+      sample = {"conversations": [
+        {
+          "role": "user",
+          "content": prompt % row[0]
+        },
+        {
+          "role": "assistant",
+          "content": "ABCDEF"[int(row[1])]
+        }
+      ]}
+      samples.append(sample)
+  with open(output, 'w') as f:
+    f.write(json.dumps(samples, ensure_ascii = False))
 
-def load_csv(data_dir):
-  convert(join(data_dir, 'train.txt'), 'train.json')
-  convert(join(data_dir, 'dev.txt'), 'dev.json')
-  convert(join(data_dir, 'dev.txt'), 'test.json')
-  dataset = load_dataset('json',
-                         data_files = {
-                           'train': 'train.json',
-                           'validate': 'dev.json',
-                           'test': 'test.json'},
-                         field = 'data'
-                        )
-  return dataset
+def main(unused_argv):
+  if exists(FLAGS.output): rmtree(FLAGS.output)
+  mkdir(FLAGS.output)
+  generate_dataset(FLAGS.dataset, 'train', output = join(FLAGS.output, 'train.json'))
+  generate_dataset(FLAGS.dataset, 'dev', output = join(FLAGS.output, 'dev.json'))
 
+if __name__ == "__main__":
+  add_options()
+  app.run(main)
