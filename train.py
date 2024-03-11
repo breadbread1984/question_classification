@@ -11,7 +11,7 @@ FLAGS = flags.FLAGS
 def add_options():
   flags.DEFINE_string('dataset', default = None, help = 'path to dataset directory')
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'path to save checkpoint directory')
-  flags.DFEINE_integer('seed', default = 42, help = 'random seed')
+  flags.DEFINE_integer('seed', default = 42, help = 'random seed')
 
 def main(unused_argv):
   tokenizer = AutoTokenizer.from_pretrained('google-bert/bert-base-chinese')
