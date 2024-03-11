@@ -29,7 +29,7 @@ def main(unused_argv):
     csv = reader(f, delimiter = '\t')
     for row in csv:
       text = row[0]
-      inputs = tokenizer(text, return_tensors = 'pt')
+      inputs = tokenizer(text, return_tensors = 'pt').to(device(FLAGS.device))
       outputs = model(**inputs)
       logits = outputs.logits
       preds = torch.argmax(logits, dim = -1).detach().cpu().numpy()
