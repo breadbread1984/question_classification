@@ -33,7 +33,7 @@ def main(unused_argv):
       inputs = tokenizer(text, return_tensors = 'pt').to(device(FLAGS.device))
       outputs = model(**inputs)
       logits = outputs.logits
-      preds = torch.argmax(logits, dim = -1).detach().cpu().numpy()
+      preds = torch.argmax(logits, dim = -1)[0].detach().cpu().numpy().item()
       of.write('%s\t%d\n' % (text, preds))
 
 if __name__ == "__main__":
