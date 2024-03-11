@@ -33,7 +33,7 @@ def main(unused_argv):
       outputs = model(**inputs)
       logits = outputs.logits
       preds = torch.argmax(logits, dim = -1).detach().cpu().numpy()
-      of.write('%s\t\%d\n' % (text, preds))
+      of.write('%s\t%d\n' % (text, preds))
 
 if __name__ == "__main__":
   add_options()
