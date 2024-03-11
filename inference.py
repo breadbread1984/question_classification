@@ -16,7 +16,7 @@ def add_options():
   flags.DEFINE_string('input', default = None, help = 'path to input csv')
   flags.DEFINE_string('output', default = None, help = 'path to output csv')
   flags.DEFINE_string('ckpt', default = None, help = 'path to checkpoint')
-  flags.DEFINE_string('device', default = 'cuda', enum_values = {'cuda', 'cpu'}, help = 'device')
+  flags.DEFINE_enum('device', default = 'cuda', enum_values = {'cuda', 'cpu'}, help = 'device')
 
 def main(unused_argv):
   testset = load_dataset('json', data_files = 'test.json', field = 'data')
