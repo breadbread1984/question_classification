@@ -26,3 +26,8 @@ download question dataset from [tianchi contest page](https://tianchi.aliyun.com
 python3 train.py --dataset <path/to/dataset>
 ```
 
+## Inference
+
+```shell
+python3 inference.py --input <path/to/test.txt> --output pred.txt --ckpt <path/to/ckpt>
+```
