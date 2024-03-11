@@ -12,7 +12,7 @@ def convert(orig, dst):
     for row in csv:
       samples.append({'text': row[0], 'label': int(row[1])})
   with open(dst, 'w') as outf:
-    outf.write(json.dumps(samples), ensure_ascii = False)
+    outf.write(json.dumps(samples, ensure_ascii = False))
 
 def load_csv(data_dir):
   convert(join(data_dir, 'train.txt'), 'train.json')
