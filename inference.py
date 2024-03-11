@@ -4,6 +4,7 @@ from absl import flags, app
 from os.path import join
 from csv import reader
 import json
+import torch
 from torch import device
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
