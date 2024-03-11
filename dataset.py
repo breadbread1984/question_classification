@@ -22,8 +22,7 @@ def load_csv(data_dir):
                            'train': 'train.json',
                            'validate': 'dev.json',
                            'test': 'test.json'},
-                         quoting = QUOTE_ALL,
-                         quotechar = "\""
+                         column_names = ['question', 'category']
                         )
   return dataset
 
