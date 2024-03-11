@@ -11,6 +11,9 @@ FLAGS = flags.FLAGS
 def add_options():
   flags.DEFINE_string('dataset', default = None, help = 'path to dataset directory')
   flags.DEFINE_string('ckpt', default = 'ckpt', help = 'path to save checkpoint directory')
+  flags.DEFINE_float('lr', default = 2e-5, help = 'learning rate')
+  flags.DEFINE_integer('batch_size', default = 32, help = 'batch size')
+  flags.DEFINE_integer('epoch', default = 5, help = 'epoch')
   flags.DEFINE_integer('seed', default = 42, help = 'random seed')
 
 def main(unused_argv):
@@ -21,7 +24,13 @@ def main(unused_argv):
   valset = tokenized_datasets['test'].shuffle(seed = FLAGS.seed)
 
   model = AutoModelForSequenceClassification.from_pretrained('google-bert/bert-base-chinese', num_labels = 6)
-  training_args = TrainingArguments(output_dir = FLAGS.ckpt)
+  training_args = TrainingArguments(
+    output_dir = FLAGS.ckpt,
+    learning_rate = FLAGS.lr,
+    per_device_train_batch_size = FLAGS.batch_size,
+    per_device_eval_batch_size = FLAGS.batch_size,
+    num_train_epochs = FLAGS.epoch
+  )
   metric = evaluate.load('accuracy')
   def compute_metrics(eval_pred):
     logits, labels = eval_pred
