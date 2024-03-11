@@ -16,14 +16,20 @@ python3 -m pip install -r requirements.txt
 python3 download_model.py
 ```
 
-## Download datasets
+## Download & create datasets
 
 download question dataset from [tianchi contest page](https://tianchi.aliyun.com/competition/entrance/532176) and place files under a same directory.
 
-## Train model
+```shell
+python3 create_dataset.py --dataset <path/to/raw/dataset> --output <path/to/processed/dataset>
+```
+
+## Download source & train ChatGLM3
 
 ```shell
-python3 train.py --dataset <path/to/dataset>
+git clone https://github.com/THUDM/ChatGLM3
+cd ChatGLM3/finetune_demo
+python finetune_hf.py <path/to/processed/dataset> THUDM/chatglm3-6b configs/lora.yaml
 ```
 
 ## Inference
