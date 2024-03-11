@@ -10,7 +10,7 @@ def convert(orig, dst):
   with open(orig, 'r') as inf:
     csv = reader(inf, delimiter = '\t')
     for row in csv:
-      outf.write(json.dumps({'question': row[0], 'category': int(row[1])}, ensure_ascii = False) + '\n')
+      outf.write(json.dumps({'text': row[0], 'label': int(row[1])}, ensure_ascii = False) + '\n')
   outf.close()
 
 def load_csv(data_dir):
@@ -22,7 +22,7 @@ def load_csv(data_dir):
                            'train': 'train.json',
                            'validate': 'dev.json',
                            'test': 'test.json'},
-                         column_names = ['question', 'category']
+                         column_names = ['text', 'label']
                         )
   return dataset
 
