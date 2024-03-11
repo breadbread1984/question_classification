@@ -22,7 +22,7 @@ def main(unused_argv):
   testset = load_dataset('json', data_files = 'test.json', field = 'data')
   tokenizer = AutoTokenizer.from_pretrained('google-bert/bert-base-chinese')
   model = AutoModelForSequenceClassification.from_pretrained(FLAGS.ckpt)
-  model.to(device(FLAGS.device))
+  model = model.to(device(FLAGS.device))
   model.eval()
   of = open(FLAGS.output, 'w')
   with open(FLAGS.input, 'r') as f:
