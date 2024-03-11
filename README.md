@@ -20,4 +20,9 @@ python3 download_model.py
 
 download question dataset from [tianchi contest page](https://tianchi.aliyun.com/competition/entrance/532176) and place files under a same directory.
 
+## Train model
+
+```shell
+python3 train.py --dataset <path/to/dataset>
+```
 
