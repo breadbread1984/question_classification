@@ -8,6 +8,7 @@ import torch
 from torch import device
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
+from transformers.generation.utils import LogitsProcessorList
 from peft import AutoPeftModelForCausalLM
 from datasets import load_dataset
 
