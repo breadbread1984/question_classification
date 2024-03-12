@@ -7,7 +7,8 @@ import json
 import torch
 from torch import device
 from torch.utils.data import DataLoader
-from peft import AutoTokenizer, AutoPeftModelForCausalLM
+from transformers import AutoTokenizer
+from peft import AutoPeftModelForCausalLM
 from datasets import load_dataset
 from create_dataset import convert
 
