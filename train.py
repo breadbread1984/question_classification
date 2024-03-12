@@ -17,13 +17,13 @@ def add_options():
   flags.DEFINE_integer('seed', default = 42, help = 'random seed')
 
 def main(unused_argv):
-  tokenizer = AutoTokenizer.from_pretrained('google-bert/bert-base-chinese')
+  tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b')
   dataset = load_csv(FLAGS.dataset)
   tokenized_datasets = dataset.map(lambda x: tokenizer(x["text"], padding = 'max_length', truncation = True), batched = True)
   trainset = tokenized_datasets["train"].shuffle(seed = FLAGS.seed)
   valset = tokenized_datasets['test'].shuffle(seed = FLAGS.seed)
 
-  model = AutoModelForSequenceClassification.from_pretrained('google-bert/bert-base-chinese', num_labels = 6)
+  model = AutoModelForSequenceClassification.from_pretrained('meta-llama/Llama-2-7b', num_labels = 6)
   training_args = TrainingArguments(
     output_dir = FLAGS.ckpt,
     learning_rate = FLAGS.lr,

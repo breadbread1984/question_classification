@@ -21,7 +21,7 @@ def add_options():
 
 def main(unused_argv):
   testset = load_dataset('json', data_files = 'test.json', field = 'data')
-  tokenizer = AutoTokenizer.from_pretrained('google-bert/bert-base-chinese')
+  tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b')
   model = AutoModelForSequenceClassification.from_pretrained(FLAGS.ckpt)
   model = model.to(device(FLAGS.device))
   model.eval()
