@@ -21,7 +21,7 @@ def add_options():
 
 def main(unused_argv):
   assert exists(join(FLAGS.ckpt, 'adapter_config.json'))
-  model = AutoPeftModelForCausalLM.from_pretrained(FLAGS.ckpt, trust_remote_code = Tryue, device_map = "auto")
+  model = AutoPeftModelForCausalLM.from_pretrained(FLAGS.ckpt, trust_remote_code = True, device_map = "auto")
   tokenizer = AutoTokenizer.from_pretrained(model.peft_config['default'].base_model_name_or_path, trust_remote_code = True)
   model = model.to(device(FLAGS.device))
   model.eval()
