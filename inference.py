@@ -10,7 +10,6 @@ from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
 from peft import AutoPeftModelForCausalLM
 from datasets import load_dataset
-from create_dataset import convert
 
 FLAGS = flags.FLAGS
 
