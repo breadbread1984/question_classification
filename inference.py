@@ -36,7 +36,7 @@ def main(unused_argv):
       text = row[0]
       inputs = tokenizer.build_chat_input(text, history = [], role = 'user').to(device(FLAGS.device))
       eos_token_id = [tokenizer.eos_token_id, tokenizer.get_command("<|user|>"), tokenizer.get_command("<|observation|>")]
-      outputs = model.generate(**inputs, **kwargs, eos_token_id = eos_token_id)
+      outputs = model(**inputs)
       logits = outputs.logits
       logits = logits[:, choice_tokens] # logits.shape = (1, 6)
       preds = logits.argmax(dim = -1).detach().cpu().numpy().item() # preds.shape = (1,)
