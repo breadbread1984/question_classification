@@ -21,7 +21,7 @@ def main(unused_argv):
   login(token = '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')
   tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b')
   dataset = load_csv(FLAGS.dataset)
-  tokenized_datasets = dataset.map(lambda x: tokenizer(x["text"], padding = 'max_length', truncation = True), batched = True)
+  tokenized_datasets = dataset.map(lambda x: tokenizer(x["text"], padding = True, truncation = True, return_tensors = 'pt'), batched = True)
   trainset = tokenized_datasets["train"].shuffle(seed = FLAGS.seed)
   valset = tokenized_datasets['test'].shuffle(seed = FLAGS.seed)
 
