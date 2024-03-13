@@ -22,6 +22,7 @@ def add_options():
 def main(unused_argv):
   testset = load_dataset('json', data_files = 'test.json', field = 'data')
   tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b-hf')
+  tokenizer.pad_token = tokenizer.eos_token
   model = AutoModelForSequenceClassification.from_pretrained(FLAGS.ckpt)
   model = model.to(device(FLAGS.device))
   model.eval()
