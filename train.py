@@ -18,7 +18,7 @@ def add_options():
   flags.DEFINE_integer('seed', default = 42, help = 'random seed')
 
 def main(unused_argv):
-  login()
+  login(token = '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')
   tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b')
   dataset = load_csv(FLAGS.dataset)
   tokenized_datasets = dataset.map(lambda x: tokenizer(x["text"], padding = 'max_length', truncation = True), batched = True)
