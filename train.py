@@ -22,7 +22,7 @@ def main(unused_argv):
   tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b-hf')
   tokenizer.pad_token = tokenizer.eos_token
   dataset = load_csv(FLAGS.dataset)
-  tokenized_datasets = dataset.map(lambda x: tokenizer(x["text"], padding = True, truncation = True), batched = True)
+  tokenized_datasets = dataset.map(lambda x: tokenizer(x["text"], padding = 'max_length', truncation = True, max_length = 1024), batched = True)
   trainset = tokenized_datasets["train"].shuffle(seed = FLAGS.seed)
   valset = tokenized_datasets['test'].shuffle(seed = FLAGS.seed)
 
