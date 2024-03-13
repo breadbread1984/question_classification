@@ -28,7 +28,7 @@ def main(unused_argv):
   valset = tokenized_datasets['test'].shuffle(seed = FLAGS.seed)
 
   model = AutoModelForSequenceClassification.from_pretrained('meta-llama/Llama-2-7b-hf', num_labels = 6)
-  assert len(tokenizer) == model.model.embed_tokens
+  assert len(tokenizer) == model.model.embed_tokens.weight.shape[0]
   training_args = TrainingArguments(
     output_dir = FLAGS.ckpt,
     learning_rate = FLAGS.lr,
