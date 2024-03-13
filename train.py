@@ -20,13 +20,15 @@ def add_options():
 def main(unused_argv):
   login(token = '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')
   tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b-hf')
-  tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+  tokenizer.pad_token = tokenizer.eos_token
+  #tokenizer.add_special_tokens({'pad_token': '[PAD]'})
   dataset = load_csv(FLAGS.dataset)
   tokenized_datasets = dataset.map(lambda x: tokenizer(x["text"], padding = 'max_length', truncation = True, max_length = 1024), batched = True)
   trainset = tokenized_datasets["train"].shuffle(seed = FLAGS.seed)
   valset = tokenized_datasets['test'].shuffle(seed = FLAGS.seed)
 
   model = AutoModelForSequenceClassification.from_pretrained('meta-llama/Llama-2-7b-hf', num_labels = 6)
+  assert len(tokenizer) == model.model.embed_tokens
   training_args = TrainingArguments(
     output_dir = FLAGS.ckpt,
     learning_rate = FLAGS.lr,
