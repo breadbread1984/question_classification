@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from absl import flags, app
+from huggingface_hub import login
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, TrainingArguments, Trainer
 import evaluate
 from create_dataset import load_csv
@@ -17,6 +18,7 @@ def add_options():
   flags.DEFINE_integer('seed', default = 42, help = 'random seed')
 
 def main(unused_argv):
+  login()
   tokenizer = AutoTokenizer.from_pretrained('meta-llama/Llama-2-7b')
   dataset = load_csv(FLAGS.dataset)
   tokenized_datasets = dataset.map(lambda x: tokenizer(x["text"], padding = 'max_length', truncation = True), batched = True)
